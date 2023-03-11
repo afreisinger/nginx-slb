@@ -5,7 +5,7 @@ First
 ```sh
 echo "127.0.0.1  www.appster.com appster.com" >> /etc/hosts
 ```
-
+Then
 ```sh
-docker-compose up --build --remove-orphans
+./start.sh
 ```
