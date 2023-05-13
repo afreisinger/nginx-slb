@@ -1,0 +1,87 @@
+
+version: "3"
+services:
+  nginx-slb:
+    image: nginx:alpine
+    hostname: ngx-slb
+    container_name: ngx-slb
+    ports:
+      - 80:80
+    volumes:
+      #- ./etc/proxy/nginx:/etc/nginx
+      #- /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      - production-yellow
+      - production-green
+      - production-orange
+      - production-red
+    networks:
+      farm:
+        ipv4_address: 172.16.5.1
+     
+  production-yellow:
+    image: afreisinger/nginx:hello
+    hostname: production-yellow
+    container_name: production-yellow
+    ports:
+      - 9080:80
+    #volumes:
+      #- ./etc/appster/nginx:/etc/nginx
+      #- /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      farm:
+        ipv4_address: 172.16.5.10
+  
+  production-green:
+    image: afreisinger/nginx:hello
+    hostname: production-green
+    container_name: production-green
+    ports:
+      - 9081:80
+    #volumes:
+     # - ./etc/appster/nginx:/etc/nginx
+    #  - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      farm:
+        ipv4_address: 172.16.5.11
+  
+  production-orange:
+    image: afreisinger/nginx:hello
+    hostname: production-orange
+    container_name: production-orange
+    ports:
+      - 9082:80
+    #volumes:
+      #- ./etc/appster/nginx:/etc/nginx
+      #- /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      farm:
+        ipv4_address: 172.16.5.12
+
+  production-red:
+    image: afreisinger/nginx:hello
+    hostname: production-red
+    container_name: production-red
+    ports:
+      - 9083:80
+    #volumes:
+     # - ./etc/appster/nginx:/etc/nginx
+      #- /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      farm:
+        ipv4_address: 172.16.5.13
+
+networks:
+  farm:
+    driver: bridge
+    name: farm-lab
+    attachable: true
+    ipam:
+      config:
+          - subnet: 172.16.0.0/16
+            ip_range: 172.16.5.0/24
+            gateway: 172.16.0.1
+
+#networks:
+#  lab:
+#    external: true
