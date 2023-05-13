@@ -7,7 +7,7 @@ services:
     container_name: ngx-slb
     ports:
       - 80:80
-    volumes:
+    #volumes:
       #- ./etc/proxy/nginx:/etc/nginx
       #- /var/run/docker.sock:/var/run/docker.sock
     depends_on:
