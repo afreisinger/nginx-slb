@@ -5,4 +5,4 @@
 # @reboot ( sleep 60 ; sh /var/www/appster/start.sh )
 
 DIRECTORY=`dirname $0`
-docker-compose -f $DIRECTORY/docker-compose.yml up -d --remove-orphans
+docker-compose -f $DIRECTORY/docker-compose.yaml up -d --remove-orphans
